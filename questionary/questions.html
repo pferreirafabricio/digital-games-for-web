@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Questions</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <div class="question">
+                <span class="question-title">1) Qual o nome do Brasil?</span>
+
+                <div class="question-option">
+                    <input id="q1-op1" type="radio" name="q1" />
+                    <label>Brasil</label>
+                </div>
+                <div class="question-option">
+                    <input id="q1-op2" type="radio" name="q1" />
+                    <label>República Federativa do Brasil</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">2) Quem em Naruto é chamado de 'sobrancelhudo'?</span>
+
+                <div class="question-option">
+                    <input id="q2-op1" type="radio" name="q2" />
+                    <label>Rita Lee</label>
+                </div>
+                <div class="question-option">
+                    <input id="q2-op2" type="radio" name="q2" />
+                    <label>Rock Lee</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">3) Qual o nome da filha de Kratos?</span>
+
+                <div class="question-option">
+                    <input id="q3-op1" type="radio" name="q3" />
+                    <label>Calliope</label>
+                </div>
+                <div class="question-option">
+                    <input id="q3-op2" type="radio" name="q3" />
+                    <label>Angriboda</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">4) Qual o nome do pai do Naruto?</span>
+
+                <div class="question-option">
+                    <input id="q4-op1" type="radio" name="q4" />
+                    <label>Bigato</label>
+                </div>
+                <div class="question-option">
+                    <input id="q4-op2" type="radio" name="q4" />
+                    <label>Minato</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">5) Qual o país em que o Maradona nasceu?</span>
+
+                <div class="question-option">
+                    <input id="q5-op1" type="radio" name="q5" />
+                    <label>Argentina</label>
+                </div>
+                <div class="question-option">
+                    <input id="q5-op2" type="radio" name="q5" />
+                    <label>Uruguai</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">6) De quantos em quantos anos ocorre a Copa do Mundo?</span>
+
+                <div class="question-option">
+                    <input id="q6-op1" type="radio" name="q6" />
+                    <label>4 anos</label>
+                </div>
+                <div class="question-option">
+                    <input id="q6-op2" type="radio" name="q6" />
+                    <label>2 anos</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">7) De quantos em quantos anos ocorre as eleições para presidente no Brasil?</span>
+
+                <div class="question-option">
+                    <input id="q7-op1" type="radio" name="q7" />
+                    <label>3 anos</label>
+                </div>
+                <div class="question-option">
+                    <input id="q7-op2" type="radio" name="q7" />
+                    <label>4 anos</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">8) Qual o nome do suplemento alimentar que é derivado do soro do leite?</span>
+
+                <div class="question-option">
+                    <input id="q8-op1" type="radio" name="q8" />
+                    <label>BCAA</label>
+                </div>
+                <div class="question-option">
+                    <input id="q8-op2" type="radio" name="q8" />
+                    <label>Whey protein</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">9) Uma pasta de amendoim é feita com qual alimento?</span>
+
+                <div class="question-option">
+                    <input id="q9-op1" type="radio" name="q9" />
+                    <label>Amendoim</label>
+                </div>
+                <div class="question-option">
+                    <input id="q9-op2" type="radio" name="q9" />
+                    <label>Jaca</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-title">10) Qual o nome do anime em que o protagonista se chama Ichigo?</span>
+
+                <div class="question-option">
+                    <input id="q10-op1" type="radio" name="q10" />
+                    <label>Dragon Ball</label>
+                </div>
+                <div class="question-option">
+                    <input id="q10-op2" type="radio" name="q10" />
+                    <label>Bleach</label>
+                </div>
+            </div>
+
+            <input type="button" class="button" value="Validar " style="margin-top: 20px" onclick="validateQuestions()" />
+        </form>
+
+        <span id="correct" class="answer correct">Sem resultados ainda</span>
+        <span id="incorrect" class="answer incorrect">Sem resultados ainda</span>
+
+        <script src="./index.js"></script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <form action="">
+        <input type="text" name="text" size="35" maxlength="35" value="Javascript course"
+            onchange="alert('The content changed!')">
+        <input type="radio" name="option" onclick="alert('Radio clicked!')">
+        <input type="checkbox" name="checkbox" onclick="alert('Checkbox clicked!')">
+        <input type="button" value="Click here" onclick="redirectTo('https:\/\/google.com')">
+    </form>
+    <form>
+        <h2 class="center">
+            Click on the buttons to change the background color
+        </h2>
+        <div class="buttons-container">
+            <input type="button" value="Red" onclick="changeBackgroundColor('#ff0000')" />
+            <input type="button" value="Green" onclick="changeBackgroundColor('#00ff00')">
+            <input type="button" value="Blue" onclick="changeBackgroundColor('#0000ff')">
+            <input type="button" value="Clean" onclick="changeBackgroundColor('#ffffff')">
+        </div>
+    </form>
+    <form>
+        <input id="monthInput" type="text" name="text" size="35" maxlength="35" type="number">
+        <input type="button" value="Get month name" onclick="alert(
+                getMonthName(
+                    getInputValue('monthInput')
+                )
+            )">
+    </form>
+    <div>
+        <input id="loopText" placeholder="Text" type="text" />
+        <input id="loopNumber" placeholder="Number of times" size="2" type="number" />
+        <input type="button" class="button" value="Loop message" onclick="writeMany()" />
+        <div id="messages"></div>
+    </div>
+
+
+    
+    <script src="./index.js"></script>
+</body>
+
+</html>

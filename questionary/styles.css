@@ -1,0 +1,69 @@
+:root {
+    --background-cian: rgb(204, 238, 238);
+    --background-grey: rgb(236, 236, 236);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input[type=text],
+input[type=number] {
+    padding-left: 6px;
+    border: none;
+    height: 32px;
+    border-radius: 4px;
+    background-color: var(--background-grey);
+}
+
+form:not(:first-child) {
+    margin: 100px 0px;
+}
+
+input[type=button],
+.button {
+    width: 160px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--background-cian);
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.center {
+    text-align: center;
+}
+
+.question:not(:first-child) {
+    margin: 20px 0px;
+}
+
+.question-title {
+    display: block;
+    font-weight: bold;
+}
+
+.answer {
+    display: block;
+    padding: 6px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.correct {
+    background-color: rgb(61, 184, 61);
+    width: 20%;
+}
+
+.incorrect {
+    background-color: rgb(253, 70, 70);
+    width: 20%;
+}
