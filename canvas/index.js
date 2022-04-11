@@ -10,6 +10,11 @@ const baseWidth = 1280;
 const baseHeight = 720;
 const maxJumps = 3;
 
+/**
+ * Hold the reference of previous values by a key
+ */
+const previousObject = {};
+
 const floor = {
     x: 0,
     y: baseHeight * 0.8
@@ -47,14 +52,15 @@ const player = {
 const obstacle = {
     allObstacles: [],
     colors: ["#3beca8", "#fcc147", "#6c2d4e", "#def098", "#cd382f"],
+    positions: [baseWidth / 2, baseWidth / 3, baseWidth / 1.2, baseWidth / 1.4, baseWidth / 1.6],
     insertTime: 0,
     create: function () {
         this.allObstacles.push({
-            x: baseWidth / 2,
+            x: getRandomElement(this.positions, 5, true, 'obstaclePositions'),
             y: 0,
             width: 20 + Math.floor(20 * Math.random()),
             height: 30 + Math.floor(120 * Math.random()),
-            color: this.colors[Math.floor(5 * Math.random())],
+            color: getRandomElement(this.colors, 5, true, 'obstacleColors'),
             gravity: 1.6,
             velocity: 0,
         });
@@ -194,4 +200,45 @@ function createGradient(color1, color2) {
     gradient.addColorStop(1, color2);
 
     return gradient;
+}
+
+/**
+ * @param {Array} elements 
+ * @param {Number} numberOfElements 
+ * @param {Boolean} validateIfIsTheSame 
+ * @param {Boolean} validateIfIsTheSame 
+ */
+function getRandomElement(
+    elements,
+    numberOfElements,
+    validateIfIsTheSame = false,
+    contextKey = ''
+) {
+    const random = elements[Math.floor(numberOfElements * Math.random())];
+
+    if (!validateIfIsTheSame) return random;
+
+    if (isTheSameValue(contextKey, random)) {
+        this.getRandomElement(elements, numberOfElements, true, contextKey);
+    }
+
+    return random;
+}
+
+/**
+ * @param {string} contextKey 
+ * @param {Number | String} currentRandomValue
+ * @returns 
+ */
+function isTheSameValue(contextKey, currentRandomValue) {
+    if (!previousObject.hasOwnProperty(contextKey)) {
+        previousObject[contextKey] = '';
+        return false;
+    }
+
+    const result = previousObject[contextKey] === currentRandomValue;
+
+    if (!result) previousObject[contextKey] = currentRandomValue;
+
+    return result;
 }
