@@ -1,3 +1,5 @@
+import GAME_STATE from "./gameState.js";
+
 document.addEventListener("DOMContentLoaded", main);
 
 /** @type {CanvasRenderingContext2D} */
@@ -9,6 +11,7 @@ let windowWidth = 0;
 const baseWidth = 1280;
 const baseHeight = 720;
 const maxJumps = 3;
+let currentGameState = GAME_STATE.PLAY;
 
 /**
  * Hold the reference of previous values by a key
@@ -32,7 +35,7 @@ const player = {
         force: 23.6,
         quantity: 0
     },
-    update: function () {
+    update: function() {
         this.velocity += this.gravity;
         this.y += this.velocity;
 
@@ -41,7 +44,7 @@ const player = {
             this.jumpConfig.quantity = 0;
         }
     },
-    jump: function () {
+    jump: function() {
         if (this.jumpConfig.quantity < maxJumps) {
             this.velocity = -this.jumpConfig.force;
             this.jumpConfig.quantity++;
@@ -50,34 +53,62 @@ const player = {
 };
 
 const obstacle = {
+    /**
+     * @typedef Obstacle
+     */
+
+    /**
+     * @type Obstacle[]
+     */
     allObstacles: [],
     colors: ["#3beca8", "#fcc147", "#6c2d4e", "#def098", "#cd382f"],
     positions: [baseWidth / 2, baseWidth / 3, baseWidth / 1.2, baseWidth / 1.4, baseWidth / 1.6],
     insertTime: 0,
-    create: function () {
+    create: function() {
         this.allObstacles.push({
-            x: getRandomElement(this.positions, 5, true, 'obstaclePositions'),
+            x: baseWidth, // getRandomElement(this.positions, 5, true, 'obstaclePositions'),
             y: 0,
             width: 20 + Math.floor(20 * Math.random()),
             height: 30 + Math.floor(120 * Math.random()),
             color: getRandomElement(this.colors, 5, true, 'obstacleColors'),
             gravity: 1.6,
-            velocity: 0,
+            velocityInY: 0,
+            velocityInX: 3,
         });
 
-        this.insertTime = 30 + Math.floor(21 * Math.random());
+        this.insertTime = 50 + Math.floor(31 * Math.random());
     },
-    update: function () {
-        this.allObstacles.forEach((obstacle) => {
-            obstacle.velocity += obstacle.gravity;
-            obstacle.y += obstacle.velocity;
+    update: function() {
+        if (this.insertTime === 0) this.create();
+        else this.insertTime--;
+
+        this.allObstacles.forEach((obstacle, index) => {
+            obstacle.velocityInY += obstacle.gravity;
+            obstacle.y += obstacle.velocityInY;
 
             if (obstacle.y > (floor.y - obstacle.height)) {
                 obstacle.y = floor.y - obstacle.height;
             }
+
+            obstacle.x -= obstacle.velocityInX;
+
+            if (obstacle.x <= -obstacle.width) {
+                this.allObstacles.splice(index, 1);
+                return;
+            }
+
+            if (
+                player.x < (obstacle.x + obstacle.width) &&
+                (player.x + player.width) >= obstacle.x &&
+                (player.y + player.height) >= (floor.y - obstacle.height)
+            ) {
+                currentGameState = GAME_STATE.LOST;
+                this.allObstacles = [];
+                return;
+            }
         });
     },
-    draw: function () {
+    draw: function() {
         this.allObstacles.forEach((obstacle) => {
             drawRectangle(
                 obstacle.x,
@@ -93,16 +124,21 @@ const obstacle = {
 function run() {
     drawElements();
     player.update();
-    // obstacle.create();
-    obstacle.draw();
-    obstacle.update();
+
+    if (currentGameState === GAME_STATE.PLAYING) {
+        obstacle.draw();
+        obstacle.update();
+    }
 
     window.requestAnimationFrame(run);
 }
 
 function click() {
-    player.jump();
-    console.warn('Canvas was clicked');
+    if (currentGameState === GAME_STATE.PLAY) currentGameState = GAME_STATE.PLAYING;
+
+    if (currentGameState === GAME_STATE.PLAYING) player.jump();
+
+    if (currentGameState === GAME_STATE.LOST) currentGameState = GAME_STATE.PLAY;
 }
 
 function main() {
@@ -136,8 +172,6 @@ function configureCanvas() {
 function drawElements() {
     // Sky
     drawRectangle(0, 0, windowWidth, windowHeight, "#53d6ed");
-    // drawRectangle(0, 0, baseWidth / 5, baseHeight, "#f72098");
-    // drawRectangle((baseWidth - (baseWidth / 5)), 0, baseWidth / 5, baseHeight, "#f72098");
     // Floor
     drawRectangle(floor.x, floor.y, windowWidth, 200, "#cf9044");
     // Player
@@ -149,6 +183,14 @@ function drawElements() {
         player.color,
         "#FF0000"
     );
+
+    if (currentGameState === GAME_STATE.PLAY) {
+        drawRectangle(baseWidth / 2 - 50, baseHeight / 2 - 50, 100, 100, "green");
+    }
+
+    if (currentGameState === GAME_STATE.LOST) {
+        drawRectangle(baseWidth / 2 - 50, baseHeight / 2 - 50, 100, 100, "red");
+    }
 }
 
 /**
@@ -206,7 +248,7 @@ function createGradient(color1, color2) {
  * @param {Array} elements 
  * @param {Number} numberOfElements 
  * @param {Boolean} validateIfIsTheSame 
- * @param {Boolean} validateIfIsTheSame 
+ * @param {String} contextKey
  */
 function getRandomElement(
     elements,
@@ -219,7 +261,7 @@ function getRandomElement(
     if (!validateIfIsTheSame) return random;
 
     if (isTheSameValue(contextKey, random)) {
-        this.getRandomElement(elements, numberOfElements, true, contextKey);
+        getRandomElement(elements, numberOfElements, true, contextKey);
     }
 
     return random;
